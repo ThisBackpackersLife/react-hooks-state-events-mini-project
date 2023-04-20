@@ -4,35 +4,41 @@ import NewTaskForm from "./NewTaskForm";
 import TaskList from "./TaskList";
 
 import { CATEGORIES, TASKS } from "../data";
-console.log("Here's the data you're working with");
-console.log({ CATEGORIES, TASKS });
 
 function App() {
 
-  const [ tasks, setTask] = useState( TASKS )
+  const [ tasks, setTasks] = useState( TASKS )
   const [ categories, setCategories ] = useState( CATEGORIES )
 
   const [ selectedCategory, setSelectedCategory ] = useState("All")
 
-  // const changeSelectedCategory() {
-
-  // }
+  const changeSelectedCategory = newCategory => setSelectedCategory( newCategory )
 
   const deleteTask = ( deleteIndex ) => {
     const removeTaskFromList = tasks.filter( (task, index) => index !== deleteIndex)
     
-    setTask( removeTaskFromList )
+    setTasks( removeTaskFromList )
   }
 
+  const filterTasks = tasks.filter( task => task.category === selectedCategory || selectedCategory === "All" )
 
+  const addNewTask = newTask => setTasks( [...tasks, newTask ] )
 
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter 
-      categories = { categories } />
-      <NewTaskForm />
-      <TaskList tasks = { tasks } deleteTask = { deleteTask } />
+        <CategoryFilter 
+        categories = { categories }
+        changeSelectedCategory = { changeSelectedCategory } 
+      />
+      <NewTaskForm
+         categories={ categories }
+         onTaskFormSubmit={ addNewTask }
+      />
+      <TaskList 
+        tasks = { filterTasks } 
+        deleteTask = { deleteTask } 
+      />
     </div>
   );
 }

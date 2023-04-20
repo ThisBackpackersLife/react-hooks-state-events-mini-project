@@ -1,8 +1,9 @@
 import React from "react";
 
 function Task( props ) {
+  console.log( props )
 
-  let { text, category } = props.task 
+  let { category, text } = props.task 
 
   return (
     <div className="task">

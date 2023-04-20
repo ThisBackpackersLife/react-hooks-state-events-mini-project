@@ -4,14 +4,16 @@ import { render } from "@testing-library/react";
 // import { TASKS } from "../data";
 
 
-function TaskList( { tasks, deleteTask }) {
+function TaskList(props) {
   
-  const renderTasks = tasks.map(( task, index )=> 
+    let tasks = props.tasks
+
+  const renderTasks = tasks.map(( task, index ) => 
     <Task 
       key = { index } 
       task = { task } 
       index = { index }
-      deleteTask = { deleteTask }
+      deleteTask = { props.deleteTask }
     />
   )
   
